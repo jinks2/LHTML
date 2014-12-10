@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<video src='./test.webm' controls id='video'>
+		<object data='videoplayer.swf' type='application/x-shockwave-flash'>
+			<param name="movie" value="video.swf">
+		</object>
+	</video>
+</body>
+
+<script type="text/javascript">
+	var video = document.getElementById('video');
+	console.log(video.height,video.width);
+	console.log(video.videoHeight,video.videoWidth);
+	video.height = 100;
+	video.width = 200;
+	console.log(video.height,video.width);
+	console.log(video.videoHeight,video.videoWidth);
+</script>
+</html>		
