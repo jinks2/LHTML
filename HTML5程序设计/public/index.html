@@ -4,11 +4,63 @@
 	<title></title>
 </head>
 <body>
-	<video src='test.webm' controls>
-	    <track src="1.vtt" kind="subtitles" srclang="en" label="English" />  
-		<object data='videoplayer.swf' type='application/x-shockwave-flash'>
-			<param name="movie" value="video.swf">
-		</object>
-	</video>
+	<div>support: <span id="support"></span></div>
+	<button id="btn">Start</button><br>
+	<div>latitude: <span id="latitude"></span></div>
+	<div>llongitude:<span id="longitude"></span></div>
+	<div>accuracy:<span id="accuracy"></span></div>
+	<div>timestamp:<span id="timestamp"></span></div>
+	<div>msg:<span id="msg"></span></div>
+	<script type="text/javascript">
+
+		function loadDemo() {
+			if(navigator.geolocation) {
+				document.getElementById('support').innerHTML = 'Geolocation supported';
+			} else {
+				document.getElementById('support').innerHTML = 'Geolocation is not supported in your browser';
+			}
+		}
+		function updateLocation(position) {
+			var latitude = posotion.coords.latitude;
+			var longitude = position.coords.longitude;
+			var accuracy = position.coords.accuracy;
+			var timestamp = position.timestamp;
+
+			document.getElementById('latitude').innerHTML = latitude;
+			document.getElementById('longitude').innerHTML = longitude;
+			document.getElementById('accuracy').innerHTML = accuracy;
+			document.getElementById('timestamp').innerHTML = timestamp;
+		}
+
+		function handleLocationError(error) {
+			var code = error.code;
+			var msg = error.message;
+			switch(error.code) {
+				case 0:
+				  updateStatus(msg);
+				  break;
+				case 1:
+				console.log(msg);
+				  updateStatus(msg);
+				  break;
+				case 2:
+				  updateStatus(msg);
+				  break;
+				case 3:
+				  updateStatus('The browser timed out before retrieving the location');
+				  break;      
+			}
+		}
+		function updateStatus(msg) {
+			console.log(msg);
+			document.getElementById('msg').innerHTML = msg;
+		}
+		window.onload = loadDemo;
+		var btn = document.getElementById('btn');
+		btn.onclick = function () {
+			navigator.geolocation.getCurrentPosition(updateLocation, handleLocationError, {timeout: 100000});
+		}
+		
+	</script>
 </body>
 </html>		
