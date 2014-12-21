@@ -11,6 +11,7 @@
 	<div>accuracy:<span id="accuracy"></span></div>
 	<div>timestamp:<span id="timestamp"></span></div>
 	<div>msg:<span id="msg"></span></div>
+	<a href="2.html">next</a>
 	<script type="text/javascript">
 
 		function loadDemo() {
@@ -21,10 +22,10 @@
 			}
 		}
 		function updateLocation(position) {
-			var latitude = posotion.coords.latitude;
-			var longitude = position.coords.longitude;
-			var accuracy = position.coords.accuracy;
-			var timestamp = position.timestamp;
+			var latitude = position.coords.latitude; //经度
+			var longitude = position.coords.longitude; //纬度
+			var accuracy = position.coords.accuracy; //准确度
+			var timestamp = position.timestamp;  //时间戳
 
 			document.getElementById('latitude').innerHTML = latitude;
 			document.getElementById('longitude').innerHTML = longitude;
@@ -33,25 +34,23 @@
 		}
 
 		function handleLocationError(error) {
-			var code = error.code;
 			var msg = error.message;
 			switch(error.code) {
 				case 0:
-				  updateStatus(msg);
+				  updateErrorStatus('There was an error while retrieving your location.Additional details: ' + msg);
 				  break;
 				case 1:
-				console.log(msg);
-				  updateStatus(msg);
+				  updateErrorStatus('The user opted not to share his or her location');
 				  break;
 				case 2:
-				  updateStatus(msg);
+				  updateErrorStatus('The browser was unable to determine your location.Additional details: ' + msg);
 				  break;
 				case 3:
-				  updateStatus('The browser timed out before retrieving the location');
+				  updateErrorStatus('The browser timed out before retrieving the location');
 				  break;      
 			}
 		}
-		function updateStatus(msg) {
+		function updateErrorStatus(msg) {
 			console.log(msg);
 			document.getElementById('msg').innerHTML = msg;
 		}
